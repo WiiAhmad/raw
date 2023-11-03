@@ -68,26 +68,47 @@ int main()
     }
     cout << "Total Frequency : " << totalFrequency << endl;
 
-    // // Menginisialisasi smallestData dan largestData dengan nilai yang valid
-    // int smallestData = data[0].score;
-    // int largestData = data[0].score;
+    // // Menginisialisasi smallestData dengan nilai dari elemen pertama dalam data
+    float smallestData = data[0].score;
+    cout << "small sebelum" << smallestData << endl;
+    // Menginisialisasi largestData dengan nilai dari elemen pertama dalam data
+    float largestData = data[0].score;
 
-    // // Mencari nilai terbesar dan terkecil dalam data
-    // for (int i = 1; i < n; i++)
-    // {
-    //     if (data[i].score < smallestData)
-    //     {
-    //         smallestData = data[i].score;
-    //     }
-    //     if (data[i].score > largestData)
-    //     {
-    //         largestData = data[i].score;
-    //     }
-    // }
+    // Mencari nilai terbesar dan terkecil dalam data
+    for (int i = 0; i < n; i++)
+    {
+        if (data[i].score != 0)
+        {
+            cout << "data" << data[i].score << endl;
+            if (smallestData < data[i].score)
+            {
+                smallestData = data[i].score;
+                cout << "small data" << smallestData << endl;
+                break;
+            }
+        }
+    }
 
-    // // Menghitung rentang
-    // int range = largestData - smallestData;
+    for (int i = 0; i < n; i++)
+    {
+        if (data[i].score > largestData)
+        {
+            largestData = data[i].score;
+        }
+    }
 
-    // // Menampilkan rentang
-    // cout << "Range: " << range << endl;
+    // Menghitung rentang
+    float range = largestData - smallestData;
+
+    // Menampilkan rentang
+    cout << "Range: " << range << endl;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (data[i].score != 0 || data[i].frequency != 0)
+        {
+            cout << "Score : " << data[i].score;
+            cout << " Frequency : " << data[i].frequency << endl;
+        }
+    }
 }
