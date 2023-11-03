@@ -1,0 +1,392 @@
+// classInterval classData[100];
+    // int classDataIndex = 0;
+    // float lowerBound = smallestData;
+    // float upperBound = lowerBound + interval;
+    // int frequency = 0;
+
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (data[i].score >= lowerBound && data[i].score < upperBound)
+    //     {
+    //         frequency += data[i].frequency;
+    //     }
+    //     else
+    //     {
+    //         classData[classDataIndex].lowerBound = lowerBound;
+    //         classData[classDataIndex].upperBound = upperBound;
+    //         classData[classDataIndex].frequency = frequency;
+    //         classDataIndex++;
+    //         lowerBound = upperBound;
+    //         upperBound = lowerBound + interval;
+    //         frequency = 0;
+    //     }
+    // }
+
+    // classData[classDataIndex].lowerBound = lowerBound;
+    // classData[classDataIndex].upperBound = upperBound;
+    // classData[classDataIndex].frequency = frequency;
+    // classDataIndex++;
+
+    // cout << "Class Interval" << endl;
+    // cout << "========================" << endl;
+    // for (int i = 0; i < classDataIndex; i++)
+    // {
+    //     cout << "Lower Bound : " << classData[i].lowerBound;
+    //     cout << " Upper Bound : " << classData[i].upperBound;
+    //     cout << " Frequency : " << classData[i].frequency << endl;
+    // }
+    // cout << endl;    
+
+    classInterval classData[100];
+    int classDataIndex = 0;
+    float lowerBound = smallestData;
+    float upperBound = lowerBound + interval;
+    int frequency = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if (data[i].score >= lowerBound && data[i].score < upperBound)
+        {
+            frequency += data[i].frequency;
+        }
+        else
+        {
+            classData[classDataIndex].lowerBound = lowerBound;
+            classData[classDataIndex].upperBound = upperBound;
+            classData[classDataIndex].frequency = frequency;
+            classDataIndex++;
+            lowerBound = upperBound;
+            upperBound = lowerBound + interval;
+            frequency = 0;
+        }
+    }
+
+    cout << "Class Interval" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Lower Bound : " << classData[i].lowerBound;
+        cout << " Upper Bound : " << classData[i].upperBound;
+        cout << " Frequency : " << classData[i].frequency << endl;
+    }
+    cout << endl;
+
+    float classMidpoint[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMidpoint[i] = (classData[i].lowerBound + classData[i].upperBound) / 2;
+    }
+
+    cout << "Class Midpoint" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Class Midpoint : " << classMidpoint[i] << endl;
+    }
+
+    float classMark[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMark[i] = classMidpoint[i] * classData[i].frequency;
+    }
+
+    cout << "Class Mark" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Class Mark : " << classMark[i] << endl;
+    }
+
+    float classMarkSum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMarkSum += classMark[i];
+    }
+
+    cout << "Class Mark Sum : " << classMarkSum << endl;
+
+    float mean = classMarkSum / totalFrequency;
+    cout << "Mean : " << mean << endl;
+
+    float classMarkMinusMean[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMarkMinusMean[i] = classMidpoint[i] - mean;
+    }
+
+    cout << "Class Mark Minus Mean" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Class Mark Minus Mean : " << classMarkMinusMean[i] << endl;
+    }
+
+    float classMarkMinusMeanSquare[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMarkMinusMeanSquare[i] = pow(classMarkMinusMean[i], 2);
+    }
+
+    cout << "Class Mark Minus Mean Square" << endl;
+
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Class Mark Minus Mean Square : " << classMarkMinusMeanSquare[i] << endl;
+    }
+
+    float classMarkMinusMeanSquareFrequency[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMarkMinusMeanSquareFrequency[i] = classMarkMinusMeanSquare[i] * classData[i].frequency;
+    }
+
+    cout << "Class Mark Minus Mean Square Frequency" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Class Mark Minus Mean Square Frequency : " << classMarkMinusMeanSquareFrequency[i] << endl;
+    }
+
+    float classMarkMinusMeanSquareFrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        classMarkMinusMeanSquareFrequencySum += classMarkMinusMeanSquareFrequency[i];
+    }
+
+    cout << "Class Mark Minus Mean Square Frequency Sum : " << classMarkMinusMeanSquareFrequencySum << endl;
+
+    float variance = classMarkMinusMeanSquareFrequencySum / totalFrequency;
+    cout << "Variance : " << variance << endl;
+
+    float standardDeviation = sqrt(variance);
+    cout << "Standard Deviation : " << standardDeviation << endl;
+
+    float coefficientOfVariation = (standardDeviation / mean) * 100;
+    cout << "Coefficient of Variation : " << coefficientOfVariation << endl;
+
+    float median = 0;
+    int medianFrequency = totalFrequency / 2;
+    int medianFrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        medianFrequencySum += classData[i].frequency;
+        if (medianFrequencySum >= medianFrequency)
+        {
+            median = classData[i].lowerBound + ((medianFrequency - (medianFrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Median : " << median << endl;
+
+    float mode = 0;
+    int modeFrequency = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        if (classData[i].frequency > modeFrequency)
+        {
+            modeFrequency = classData[i].frequency;
+            mode = classMidpoint[i];
+        }
+    }
+
+    cout << "Mode : " << mode << endl;
+    
+    float skewness = (mean - mode) / standardDeviation;
+    cout << "Skewness : " << skewness << endl;
+
+    float quartile1 = 0;
+    int quartile1Frequency = totalFrequency / 4;
+    int quartile1FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        quartile1FrequencySum += classData[i].frequency;
+        if (quartile1FrequencySum >= quartile1Frequency)
+        {
+            quartile1 = classData[i].lowerBound + ((quartile1Frequency - (quartile1FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Quartile 1 : " << quartile1 << endl;
+
+    float quartile3 = 0;
+    int quartile3Frequency = totalFrequency * 3 / 4;
+    int quartile3FrequencySum = 0;
+
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        quartile3FrequencySum += classData[i].frequency;
+        if (quartile3FrequencySum >= quartile3Frequency)
+        {
+            quartile3 = classData[i].lowerBound + ((quartile3Frequency - (quartile3FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Quartile 3 : " << quartile3 << endl;
+
+    float interquartileRange = quartile3 - quartile1;
+    cout << "Interquartile Range : " << interquartileRange << endl;
+
+    float lowerBoundOutlier = quartile1 - (1.5 * interquartileRange);
+    float upperBoundOutlier = quartile3 + (1.5 * interquartileRange);
+    cout << "Lower Bound Outlier : " << lowerBoundOutlier << endl;
+    cout << "Upper Bound Outlier : " << upperBoundOutlier << endl;
+
+    float lowerBoundOutlierExtreme = quartile1 - (3 * interquartileRange);
+    float upperBoundOutlierExtreme = quartile3 + (3 * interquartileRange);
+    cout << "Lower Bound Outlier Extreme : " << lowerBoundOutlierExtreme << endl;
+    cout << "Upper Bound Outlier Extreme : " << upperBoundOutlierExtreme << endl;
+
+    float percentile = 0;
+    int percentileFrequency = totalFrequency * 0.9;
+    int percentileFrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentileFrequencySum += classData[i].frequency;
+        if (percentileFrequencySum >= percentileFrequency)
+        {
+            percentile = classData[i].lowerBound + ((percentileFrequency - (percentileFrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile : " << percentile << endl;
+
+    float decile = 0;
+    int decileFrequency = totalFrequency * 0.1;
+    int decileFrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        decileFrequencySum += classData[i].frequency;
+        if (decileFrequencySum >= decileFrequency)
+        {
+            decile = classData[i].lowerBound + ((decileFrequency - (decileFrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Decile : " << decile << endl;
+
+    float percentile90 = 0;
+    int percentile90Frequency = totalFrequency * 0.9;
+    int percentile90FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile90FrequencySum += classData[i].frequency;
+        if (percentile90FrequencySum >= percentile90Frequency)
+        {
+            percentile90 = classData[i].lowerBound + ((percentile90Frequency - (percentile90FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 90 : " << percentile90 << endl;
+
+    float percentile10 = 0;
+    int percentile10Frequency = totalFrequency * 0.1;
+    int percentile10FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile10FrequencySum += classData[i].frequency;
+        if (percentile10FrequencySum >= percentile10Frequency)
+        {
+            percentile10 = classData[i].lowerBound + ((percentile10Frequency - (percentile10FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 10 : " << percentile10 << endl;
+
+    float percentile95 = 0;
+
+    int percentile95Frequency = totalFrequency * 0.95;
+    int percentile95FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile95FrequencySum += classData[i].frequency;
+        if (percentile95FrequencySum >= percentile95Frequency)
+        {
+            percentile95 = classData[i].lowerBound + ((percentile95Frequency - (percentile95FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 95 : " << percentile95 << endl;
+
+    float percentile5 = 0;
+    int percentile5Frequency = totalFrequency * 0.05;
+    int percentile5FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile5FrequencySum += classData[i].frequency;
+        if (percentile5FrequencySum >= percentile5Frequency)
+        {
+            percentile5 = classData[i].lowerBound + ((percentile5Frequency - (percentile5FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 5 : " << percentile5 << endl;
+
+    float percentile99 = 0;
+    int percentile99Frequency = totalFrequency * 0.99;
+    int percentile99FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile99FrequencySum += classData[i].frequency;
+        if (percentile99FrequencySum >= percentile99Frequency)
+        {
+            percentile99 = classData[i].lowerBound + ((percentile99Frequency - (percentile99FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 99 : " << percentile99 << endl;
+
+    float percentile1 = 0;
+    int percentile1Frequency = totalFrequency * 0.01;
+    int percentile1FrequencySum = 0;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        percentile1FrequencySum += classData[i].frequency;
+        if (percentile1FrequencySum >= percentile1Frequency)
+        {
+            percentile1 = classData[i].lowerBound + ((percentile1Frequency - (percentile1FrequencySum - classData[i].frequency)) / classData[i].frequency) * interval;
+            break;
+        }
+    }
+
+    cout << "Percentile 1 : " << percentile1 << endl;
+
+    //distribution frecuency relative and cumulative
+    float distributionFrequencyRelative[100];
+    float distributionFrequencyCumulative[100];
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        distributionFrequencyRelative[i] = (float)classData[i].frequency / totalFrequency;
+        if (i == 0)
+        {
+            distributionFrequencyCumulative[i] = distributionFrequencyRelative[i];
+        }
+        else
+        {
+            distributionFrequencyCumulative[i] = distributionFrequencyCumulative[i - 1] + distributionFrequencyRelative[i];
+        }
+    }
+
+    cout << "Distribution Frequency Relative" << endl;
+    cout << "========================" << endl;
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Distribution Frequency Relative : " << distributionFrequencyRelative[i] << endl;
+    }
+
+    cout << "Distribution Frequency Cumulative" << endl;
+    cout << "========================" << endl; 
+    for (int i = 0; i < classDataIndex; i++)
+    {
+        cout << "Distribution Frequency Cumulative : " << distributionFrequencyCumulative[i] << endl;
+    }

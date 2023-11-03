@@ -1,11 +1,19 @@
 #include <iostream>
 #include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 struct raw
 {
-    float score = 0;
+    float score;
+    double frequency;
+};
+
+struct classInterval
+{
+    float lowerBound = 0;
+    float upperBound = 0;
     int frequency = 0;
 };
 
@@ -17,10 +25,43 @@ bool compareScores(const raw &a, const raw &b)
 int main()
 {
     raw data[100];
-    int n = 0, score, totalFrequency = 0;
+    int n = 0, score;
+    double totalFrequency;
 
-    do
-    {
+    //I need input with direct scores and frequencies, not raw data
+
+    // do
+    // {
+    //     cout << "Enter the score : ";
+    //     cin >> score;
+    //     if (score == 000)
+    //     {
+    //         break;
+    //     }
+    //     else
+    //     {
+    //         bool found = false;
+
+    //         for (int i = 0; i < n; i++)
+    //         {
+    //             if (data[i].score == score)
+    //             {
+    //                 data[i].frequency++;
+    //                 found = true;
+    //                 break;
+    //             }
+    //         }
+
+    //         if (!found)
+    //         {
+    //             data[n].score = score;
+    //             data[n].frequency = 1;
+    //             n++;
+    //         }
+    //     }
+    // } while (score != 000);
+
+    do{
         cout << "Enter the score : ";
         cin >> score;
         if (score == 000)
@@ -29,26 +70,13 @@ int main()
         }
         else
         {
-            bool found = false;
-
-            for (int i = 0; i < n; i++)
-            {
-                if (data[i].score == score)
-                {
-                    data[i].frequency++;
-                    found = true;
-                    break;
-                }
-            }
-
-            if (!found)
-            {
-                data[n].score = score;
-                data[n].frequency = 1;
-                n++;
-            }
+            data[n].score = score;
+            cout << "Enter the frequency : ";
+            cin >> data[n].frequency;  
+            n++;
         }
-    } while (score != 000);
+    }while (score != 000);
+    
 
     cout << "Raw Data" << endl;
     cout << "========================" << endl;
@@ -88,4 +116,13 @@ int main()
             cout << " Frequency : " << data[i].frequency << endl;
         }
     }
+    double logTotalFrequency = log10(totalFrequency);
+    cout << "Log Total Frequency : " << logTotalFrequency << endl;
+    int k2 = 1 + (3.3 * logTotalFrequency);
+    cout << "K2 : " << k2 << endl;
+    int k = k2 + 1;
+    cout << "Kelas : " << k << endl;
+    int interval = (range / k)+1;
+    cout << "Interval : " << interval << endl;
+
 }
